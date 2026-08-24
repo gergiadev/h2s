@@ -2,9 +2,7 @@
 
 h2s asks SNMP questions to your devices and returns the answers as JSON or YAML over HTTP.
 
-You describe each device in a small YAML file. You describe the OIDs you want to read in
-another YAML file. h2s reads both at start, keeps them in memory, and serves them at
-`GET /get?name=<device>`.
+You describe each device in a small YAML file. You describe the OIDs you want to read in another YAML file. h2s reads both at start, keeps them in memory, and serves them at `GET /get?name=<device>`.
 
 ```
                   +-----------+  SNMP   +---------------+
@@ -30,8 +28,7 @@ another YAML file. h2s reads both at start, keeps them in memory, and serves the
 
 You need Go 1.22 or newer.
 
-h2s encrypts the device passwords. The AES key is not stored in the code: you pass it at
-build time. The key must be **exactly 32 bytes**.
+h2s encrypts the device passwords. The AES key is not stored in the code: you pass it at build time. The key must be **exactly 32 bytes**.
 
 ```bash
 export H2S_AES_KEY='<your 32 bytes key>'
@@ -60,11 +57,9 @@ curl 'http://localhost:23432/get?name=bb-web1-aec&pretty'
 
 ## Host files
 
-One file per device, inside the `nodes/` folder (you can change the folder with
-`nodes-path` in `h2s.conf`).
+One file per device, inside the `nodes/` folder (you can change the folder with `nodes-path` in `h2s.conf`).
 
-The file name is free, but it is a good idea to use the device name. What really counts
-is the `name:` field inside the file: this is the value you pass to `/get?name=`.
+The file name is free, but it is a good idea to use the device name. What really counts is the `name:` field inside the file: this is the value you pass to `/get?name=`.
 
 ### Fields
 
@@ -96,8 +91,7 @@ Values of `authalgo`, `encalgo` and `sec-level` are not case sensitive.
 
 ### Encrypt the secrets first
 
-You never write a password in clear text. Use the `-e` option to encrypt it, then copy
-the result into the file:
+You never write a password in clear text. Use the `-e` option to encrypt it, then copy the result into the file:
 
 ```bash
 $ ./h2s -e 'my-snmp-password'
@@ -129,9 +123,7 @@ include:
   - default
 ```
 
-The quotes around `"2c"` are not required: YAML also converts a plain `2` or `3` into
-text here. The files in this repository use quotes anyway, because they make clear that
-the value is a version label and not a number.
+The quotes around `"2c"` are not required: YAML also converts a plain `2` or `3` into text here. The files in this repository use quotes anyway, because they make clear that the value is a version label and not a number.
 
 ### Example: SNMPv3
 
@@ -159,12 +151,10 @@ include:
 
 ### Create a host over HTTP
 
-You can also send the device as JSON. h2s encrypts the secrets for you and writes the
-YAML file:
+You can also send the device as JSON. h2s encrypts the secrets for you and writes the YAML file:
 
 ```bash
-curl -X POST http://localhost:23432/create \
-  -H 'Content-Type: application/json' \
+curl -X POST http://localhost:23432/create -H 'Content-Type: application/json' \
   -d '{
         "group":"datacenter",
         "name":"db-server-02",
@@ -180,15 +170,13 @@ curl -X POST http://localhost:23432/create \
       }'
 ```
 
-Here you send the passwords in **clear text**, so use HTTPS (`ssl: true`) if the request
-leaves your machine.
+Here you send the passwords in **clear text**, so use HTTPS (`ssl: true`) if the request leaves your machine.
 
 The name must contain only letters, numbers, dot, dash and underscore.
 
 ## OID list files
 
-One file per list, inside the `queryconfs/` folder. A list is a group of OIDs that you
-want to read together. A device asks for a list with `include`.
+One file per list, inside the `queryconfs/` folder. A list is a group of OIDs that you want to read together. A device asks for a list with `include`.
 
 ### How a host finds a list
 
@@ -207,8 +195,7 @@ include:
 
 ### The four action types
 
-Each list can contain four blocks. Every entry is `label: OID`. The label becomes the key
-in the JSON answer, so choose a name that means something to you.
+Each list can contain four blocks. Every entry is `label: OID`. The label becomes the key in the JSON answer, so choose a name that means something to you.
 
 | Block | SNMP operation | What you get back |
 |---|---|---|
@@ -235,8 +222,7 @@ Answer:
 
 #### `bulk`
 
-Use it to read everything under a branch. h2s adds the last number of the OID to the
-name, so you can tell the entries apart.
+Use it to read everything under a branch. h2s adds the last number of the OID to the name, so you can tell the entries apart.
 
 ```yaml
 name: default
@@ -258,8 +244,7 @@ Answer:
 
 #### `table`
 
-Same walk as `bulk`, but the values are grouped by column. Use it for real tables, like
-the interface table.
+Same walk as `bulk`, but the values are grouped by column. Use it for real tables, like the interface table.
 
 ```yaml
 name: iftable
@@ -279,13 +264,11 @@ Answer:
 }
 ```
 
-The values keep the same order in every column, so `ifName[1]` and `ifHCInOctets[1]`
-describe the same interface.
+The values keep the same order in every column, so `ifName[1]` and `ifHCInOctets[1]` describe the same interface.
 
 #### `cmd`
 
-This block does **not** talk SNMP. It runs a command on the machine where h2s runs, and
-puts the output in the answer. It goes through the shell, so pipes and quotes work.
+This block does **not** talk SNMP. It runs a command on the machine where h2s runs, and puts the output in the answer. It goes through the shell, so pipes and quotes work.
 
 ```yaml
 name: iftable
@@ -299,8 +282,7 @@ Answer:
 { "custom": ["..", ".", "file-one", "file-two"] }
 ```
 
-> **Security note:** anything written here runs as the h2s user. Treat `queryconfs/` as
-> trusted files and do not let untrusted people write in that folder.
+> **Security note:** anything written here runs as the h2s user. Treat `queryconfs/` as trusted files and do not let untrusted people write in that folder.
 
 ### A complete list file
 
@@ -316,8 +298,7 @@ table:
   interfaces: 1.3.6.1.2.1.31.1.1
 ```
 
-A device can include more than one list. The answers are merged in one object, so use
-different labels in different lists to avoid a collision.
+A device can include more than one list. The answers are merged in one object, so use different labels in different lists to avoid a collision.
 
 ## The oids_map file
 
@@ -331,11 +312,9 @@ laLoad 1.3.6.1.4.1.2021.10.1.3
 ifName 1.3.6.1.2.1.31.1.1.1
 ```
 
-If an OID is not in this file, h2s uses the numeric OID as the key. Nothing breaks, the
-answer is only harder to read.
+If an OID is not in this file, h2s uses the numeric OID as the key. Nothing breaks, the answer is only harder to read.
 
-Lines that do not have exactly one space are skipped, and h2s writes an error in
-`h2s.log`. If a name looks missing, check that line first.
+Lines that do not have exactly one space are skipped, and h2s writes an error in `h2s.log`. If a name looks missing, check that line first.
 
 ## Reading data
 
@@ -368,12 +347,10 @@ So always check for an `Error` key before you read the values.
 
 ### Turn on authentication
 
-Set `require-auth: true` in `h2s.conf`. Then every request needs the admin password as a
-bearer token:
+Set `require-auth: true` in `h2s.conf`. Then every request needs the admin password as a bearer token:
 
 ```bash
-curl -H "Authorization: Bearer <admin password>" \
-  'http://localhost:23432/get?name=router-01&pretty'
+curl -H "Authorization: Bearer <admin password>" 'http://localhost:23432/get?name=router-01&pretty'
 ```
 
 The default is `false`, so old clients keep working until you turn it on.
@@ -417,24 +394,15 @@ console-port: 3333
 nodes-path: ./nodes
 ```
 
-`admin-password` is used by the console and, when `require-auth` is true, by the HTTP
-API. Create it with `./h2s -e 'your-password'`.
+`admin-password` is used by the console and, when `require-auth` is true, by the HTTP API. Create it with `./h2s -e 'your-password'`.
 
 ## Things to know
 
-These are current limits of h2s. They are not bugs you need to fix, but they surprise
-people the first time.
+These are current limits of h2s. They are not bugs you need to fix, but they surprise people the first time.
 
-- **The `queryconfs/` folder is read only at start.** `reload oid` reloads `oids_map`,
-  not the list files. After you add or change a file in `queryconfs/`, restart h2s.
-- **The `active` field does nothing yet.** h2s stores it and shows it in the console, but
-  it does not skip a device when `active: false`. Every device in `nodes/` is loaded.
+- **The `queryconfs/` folder is read only at start.** `reload oid` reloads `oids_map`, not the list files. After you add or change a file in `queryconfs/`, restart h2s.
+- **The `active` field does nothing yet.** h2s stores it and shows it in the console, but it does not skip a device when `active: false`. Every device in `nodes/` is loaded.
 - **The path `./queryconfs` is fixed.** Only `nodes-path` can be changed.
-- **Console commands are lower case.** The console puts the whole line in lower case, so
-  `show target MyHost` does not find a device called `MyHost`. Use lower case names.
-- **`timeout` and `retries` multiply.** A device that is down takes
-  `timeout × retries` seconds. With the defaults that is about 30 seconds, which is more
-  than the HTTP write timeout of 10 seconds. Lower `timeout` for devices that are often
-  unreachable.
-- **Do not commit your secrets.** `h2s.conf`, `nodes/` and `certs/*.key` are in
-  `.gitignore` for a reason.
+- **Console commands are lower case.** The console puts the whole line in lower case, so `show target MyHost` does not find a device called `MyHost`. Use lower case names.
+- **`timeout` and `retries` multiply.** A device that is down takes `timeout × retries` seconds. With the defaults that is about 30 seconds, which is more than the HTTP write timeout of 10 seconds. Lower `timeout` for devices that are often unreachable.
+- **Do not commit your secrets.** `h2s.conf`, `nodes/` and `certs/*.key` are in `.gitignore` for a reason.
