@@ -40,8 +40,6 @@ make
 
 If you build without the key, h2s stops at start and tells you what is missing.
 
-> **Important:** always use the same key. If you change the key, you must encrypt all
-> passwords again. See `ROTAZIONE-CREDENZIALI.md`.
 
 ## Quick start
 
