@@ -1,0 +1,13 @@
+github.com/geoffgarside/ber v1.1.0 h1:qTmFG4jJbwiSzSXoNJeHcOprVzZ8Ulde2Rrrifu5U9w=
+github.com/geoffgarside/ber v1.1.0/go.mod h1:jVPKeCbj6MvQZhwLYsGwaGI52oUorHoHKNecGT85ZCc=
+github.com/go-gorp/gorp v2.0.0+incompatible h1:dIQPsBtl6/H1MjVseWuWPXa7ET4p6Dve4j3Hg+UjqYw=
+github.com/go-gorp/gorp v2.0.0+incompatible/go.mod h1:7IfkAQnO7jfT/9IQ3R9wL1dFhukN6aQxzKTHnkxzA/E=
+github.com/k-sone/snmpgo v3.2.0+incompatible h1:2NogYilKYSia0f+seO9P7aRa6MKG6RcnNc1L74L8WOw=
+github.com/k-sone/snmpgo v3.2.0+incompatible/go.mod h1:9MC6LeG1sGPgrwnmu/V/ncg9P2M5zS5IvE+c4KZj25g=
+github.com/lib/pq v1.0.0/go.mod h1:5WUZQaWbwv1U+lTReE5YruASi9Al49XbQIvNi/34Woo=
+github.com/proullon/ramsql v0.0.0-20220719091513-bf3c20043516 h1:bw5nFFzU6D6ksVYJX+oOt06qiJRWuEVB/OL3PwQIzz8=
+github.com/proullon/ramsql v0.0.0-20220719091513-bf3c20043516/go.mod h1:jG8oAQG0ZPHPyxg5QlMERS31airDC+ZuqiAe8DUvFVo=
+gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405 h1:yhCVgyC4o1eVCa2tZl7eS0r+SDo693bJlVdllGtEeKM=
+gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405/go.mod h1:Co6ibVJAznAaIkqp8huTwlJQCZ016jof/cbN4VW5Yz0=
+gopkg.in/yaml.v3 v3.0.1 h1:fxVm/GzAzEWqLHuvctI91KS9hhNmmWOoWu0XTYJS7CA=
+gopkg.in/yaml.v3 v3.0.1/go.mod h1:K4uyk7z7BCEPqu6E+C64Yfv1cQ7kz7rIZviUmN+EgEM=

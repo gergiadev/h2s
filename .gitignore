@@ -1,0 +1,14 @@
+# Build output
+h2s
+
+# Runtime logs
+*.log
+
+# Local configuration and credentials.
+# These were tracked until now and have been removed from the index with
+# "git rm --cached": they are still on disk, but they leave the repository
+# with the next commit. They remain in the existing history (see README/notes).
+h2s.conf
+nodes/
+certs/*.key
+.vscode

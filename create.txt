@@ -1,0 +1,16 @@
+# Passwords below are placeholders on purpose: this file used to carry the real
+# SNMP credentials of the nodes in clear text.
+
+curl -X POST http://localhost:23432/create -H 'Content-Type: application/json' -d '{"group":"CPN","name":"nodotest","snmp-ver":"2","ip":"1.1.1.1","community":"<community>"}'
+
+curl -X POST http://localhost:23432/create -H 'Content-Type: application/json' -d '{"group":"Siziano","name":"vb-si-vm-mail02","snmp-ver":"3","ip":"10.253.253.21","user":"<user>","password":"<password>", "passphrase":"<passphrase>", "encalgo":"aes", "authalgo":"sha", "sec-level":"authPriv", "include":["default"]}'
+-------------------------------------------------------------------------
+
+
+curl  https://localhost:23432/get?name=bb-web1-aec
+
+-------------------------------------------------------------------------
+# With "require-auth: true" in h2s.conf every request needs the admin password
+# as a bearer token:
+
+curl -H "Authorization: Bearer <admin password>" 'http://localhost:23432/get?name=bb-web1-aec&pretty'
